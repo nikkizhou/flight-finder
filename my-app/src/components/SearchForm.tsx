@@ -28,7 +28,7 @@ function SearchForm({ updateData }: {updateData: Function}) {
       returnDate: returnDate.value,
     };
     console.log(details);
-    
+    //
     
   }
 
