@@ -6,7 +6,7 @@ interface Props {
   innerProps: any
   closeMenu: Function
 }
-
+//
 function PassengerSelector({ innerRef, innerProps, closeMenu }: Props) {
   const [passInfo, setPassInfo] = useState({ adults: 0, children: 0 })
   console.log(passInfo);
