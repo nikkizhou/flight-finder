@@ -4,6 +4,8 @@
 }
 
 .row{
+  margin:7px;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 }
