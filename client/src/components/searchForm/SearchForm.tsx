@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import './SearchForm.css';
-import { FlightQuery } from '../../interfaces'
+import { FormDataI } from '../../interfaces'
 import PassengerField from './PassengerField'
 import RoundTripField from './RoundTripField'
 import DateField from './DateField'
@@ -13,29 +13,35 @@ interface FormData {
   returnDate: { value: string },
 };
 
-interface Props{
-  updateData: Function,
-  queryData: FlightQuery|undefined
+// interface Props{
+//   updateFormData: Function,
+//   formData: FormDataI|undefined
+// }
+
+const defaultState = {
+  depDes: '',
+  arrDes: '',
+  depDate: '',
+  returnDate: '',
+  passengers: { adults: 0, children: 0 },
+  roundTrip: true
 }
 
-
-
-
-function SearchForm({ updateData, queryData }: Props) {
-  const [readyToSendReq, setReadyToSendReq] = useState(false)
-  console.log(queryData, 'line23');
+function SearchForm({ updateFlightData }: { updateFlightData :Function}) {
+  const [formData, setFormData] = useState<FormDataI>(defaultState)
+  const [submitFlag, setSubmitFlag] = useState(false)
+  const updateFormData = (newData: FormDataI) => setFormData({ ...formData, ...newData })
 
   //@ts-ignore
   useEffect(() => {
-    const getFlightRes = () => {
-      console.log(queryData, 'line36');
-      const res = axios.get('http://localhost:5000/api/flights', { params: queryData });
-      console.log(res.data);
-      
+    const getFlightData = async  () => {
+      const res = await axios.get('http://localhost:5000/api/flights', { params: formData });
+      updateFlightData(res.data);
     }
-  }, [readyToSendReq]);
+    getFlightData()
+  }, [submitFlag]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { depDes, arrDes, depDate, returnDate } = e.target as typeof e.target & FormData
     let details = {
@@ -44,8 +50,8 @@ function SearchForm({ updateData, queryData }: Props) {
       depDate: depDate.value,
       returnDate: returnDate.value,
     };
-    await updateData(details)
-    setReadyToSendReq(true)
+    updateFormData(details)
+    setSubmitFlag(!submitFlag)
   }
 
  
@@ -54,10 +60,10 @@ function SearchForm({ updateData, queryData }: Props) {
       <form className="form" onSubmit={handleSubmit}>
         <input className="input" type="text" id="depDes" placeholder="From" required />
         <input className="input" type="text" id="arrDes" placeholder="To" required />
-        <DateField placeholder="Departure Date" id="depDate"/>
-        <DateField placeholder="Return Date" id="returnDate" />
-        <PassengerField updateData={updateData} passengers={queryData?.passengers } />
-        <RoundTripField updateData={updateData} />
+        <DateField placeholder="Departure Date" id="depDate" disabled={ false} />
+        <DateField placeholder="Return Date" id="returnDate" disabled={!formData.roundTrip } />
+        <PassengerField updateFormData={updateFormData} passengers={formData?.passengers } />
+        <RoundTripField updateFormData={updateFormData} />
         <button className="submit" type="submit">Search</button>
       </form>
     </div>

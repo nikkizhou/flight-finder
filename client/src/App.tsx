@@ -1,25 +1,22 @@
 import React,{useState} from 'react';
 import './App.css';
 import SearchForm from './components/searchForm/SearchForm'
-import FlightList from './components/FlightList'
-import { FlightQuery } from './interfaces'
+import FlightDisplay from './components/flightDisplay/FlightDisplay'
+import { FlightData } from './interfaces'
 
 function App() {
-  const defaultState = {
-    depDes: '',
-    arrDes: '',
-    depDate: '',
-    returnDate:'',
-    passengers: { adults:0, children:0},
-    roundTrip: false
+  const defaultFlightData = {
+    depFlights: [],
+    returnFlights:[]
   }
-  const [queryData, setqueryData] = useState<FlightQuery>(defaultState)
-  const updateData = (formData: FlightQuery) => setqueryData({ ...queryData, ...formData })
+  const [flightData, setFlightData] = useState<FlightData>(defaultFlightData)
+  const updateFlightData = (newFlightData: FlightData) => setFlightData(newFlightData)
+  console.log(flightData,'flightData line 18');
   
   return (
     <div className="App">
-      <SearchForm updateData={updateData} queryData={queryData} />
-      <FlightList />
+      <SearchForm updateFlightData={updateFlightData} />
+      <FlightDisplay flightData={flightData} />
     </div>
   );
 }

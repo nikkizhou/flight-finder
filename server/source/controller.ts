@@ -1,27 +1,48 @@
 import { Request, Response, Application } from 'express';
-import { FlightQuery } from "./models";
+import { Itinerary, Flight,Passenger } from "./models";
 import data from './data.json'
 
 
-export const getFlights = async (req: Request, res: Response) => {
-  if (!req.query) return res.status(400).send("Please include request params")
-  const { depDes, arrDes, depDate, passengers } = req.query
-  console.log(req.query);
-  
-  const rightFlights = []
-
+const filterFlights = (depDes: string, arrDes: string, date: string, passengers: Passenger) => {
+  const flights = []
   //@ts-ignore
   const nrPas = parseInt(passengers.adults) + parseInt(passengers.children)
-  console.log(nrPas);
-  
-  const rightDateFlights = data.filter(obj => obj.depatureDestination == depDes && obj.arrivalDestination == arrDes)
 
-  rightDateFlights.forEach(obj => {
-    let newObj = { flight_id: obj.flight_id, depatureDestination: obj.depatureDestination, arrivalDestination: obj.arrivalDestination, itineraries:null }
-    const newItiner = obj.itineraries.filter(itiner => itiner.depatureAt.includes(depDate as string) && itiner.avaliableSeats >= nrPas)
-    newObj.itineraries = newItiner
-    rightFlights.push(newObj);
+  const isRightFlight = (f: Flight) =>
+    f.depatureDestination.toLowerCase() == (depDes as string).toLowerCase()
+    && f.arrivalDestination.toLowerCase() == (arrDes as string).toLowerCase()
+  const rightDateFlights = data.filter(f => isRightFlight(f))
+
+  rightDateFlights.forEach(f => {
+    let newF = {
+      flight_id: f.flight_id,
+      depatureDestination: f.depatureDestination,
+      arrivalDestination: f.arrivalDestination,
+      itineraries: null
+    }
+    const isRightItiner = (itiner: Itinerary) =>
+      itiner.depatureAt.includes(date as string)
+      && itiner.avaliableSeats >= nrPas
+    const newItiner = f.itineraries.filter(itiner => isRightItiner(itiner))
+
+    newF.itineraries = newItiner
+    flights.push(newF) 
   })
+
+  return flights
+}
+
+export const getFlights = async (req: Request, res: Response) => {
+  if (!req.query) return res.status(400).send("Please include request params")
+  const { depDes, arrDes, depDate, returnDate, passengers, roundTrip } = req.query
+  console.log(req.query);
+  //@ts-ignore
+  const depFlights = filterFlights(depDes, arrDes, depDate, passengers)
+  console.log(depFlights);
   
-  res.status(200).send(rightFlights)
+  //@ts-ignore
+  const returnFlights = roundTrip=='true' ? filterFlights(arrDes, depDes, returnDate, passengers) : []
+  console.log(returnFlights);
+  
+  res.status(200).send({ depFlights, returnFlights })
 }

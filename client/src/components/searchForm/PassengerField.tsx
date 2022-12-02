@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import PassengerSelector from './PassengerSelector';
 //@ts-ignore
 import Select, { components } from 'react-select';
-import { FlightQuery,Passenger } from '../../interfaces'
+import { FormDataI,Passenger } from '../../interfaces'
 
 interface Props{
-  updateData: Function,
+  updateFormData: Function,
   passengers: undefined | Passenger
 }
 
-function PassengerField({ updateData, passengers }: Props) {
+function PassengerField({ updateFormData, passengers }: Props) {
   const [openMenu, setOpenMenu] = useState(false);
   
   const options = [{
@@ -25,13 +25,13 @@ function PassengerField({ updateData, passengers }: Props) {
   
 
   const CustomOption = (props: any, isDisabled: any) => {
-    const { data, innerRef, innerProps, selectProps: { closeMenu, updateData,passengers } } = props;
+    const { data, innerRef, innerProps, selectProps: { closeMenu, updateFormData,passengers } } = props;
     return data.custom
       ? <PassengerSelector
         innerRef={innerRef}
         innerProps={innerProps}
         closeMenu={closeMenu}
-        updateData={updateData}
+        updateFormData={updateFormData}
         passengers={ passengers} />
       : <components.Option {...props} />
   };
@@ -52,7 +52,7 @@ function PassengerField({ updateData, passengers }: Props) {
       onSelect={(e: any) => e.preventDefault()}
       // @ts-ignore
       closeMenu={() => setOpenMenu(false)}
-      updateData={updateData}
+      updateFormData={updateFormData}
       passengers={passengers}
     />
   )

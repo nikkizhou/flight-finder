@@ -6,8 +6,8 @@ interface SelectedObj {
   label: string
 }
 
-function RoundTripField({updateData}:{updateData:Function}) {
-  const handleSelect: any = (selected: SelectedObj) => updateData({ roundTrip: selected.value });
+function RoundTripField({updateFormData}:{updateFormData:Function}) {
+  const handleSelect: any = (selected: SelectedObj) => updateFormData({ roundTrip: selected.value });
   const roundTripOptions = [
     { value: false, label: 'One Way' },
     { value: true, label: 'Round Trip' },

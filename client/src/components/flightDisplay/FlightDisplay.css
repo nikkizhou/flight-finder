@@ -1,0 +1,42 @@
+.flightDisplay{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  }
+
+.list{
+  
+  min-width: 35vw;
+}
+
+.card{
+  border: solid;
+  border-radius: 10%;
+  margin: 10px;
+  padding: 10px;
+  break-inside: avoid;
+}
+
+.card-expansion{
+  border: solid;
+  border-radius: 10%;
+  margin: 10px;
+  padding: 10px;
+  height: 80px;
+
+}
+
+span{
+  font-weight: 400;
+}
+
+.bookBtn{
+  width: 40vw;
+}

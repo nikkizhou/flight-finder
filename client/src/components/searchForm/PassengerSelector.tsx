@@ -1,23 +1,23 @@
 import React,{useState} from 'react'
 import './PassengerSelector.css';
-import { FlightQuery, Passenger } from '../../interfaces'
+import { FormDataI, Passenger } from '../../interfaces'
 
 interface Props {
   innerRef:any
   innerProps: any
   closeMenu: Function
-  updateData: Function
+  updateFormData: Function
   passengers:Passenger
 }
 
-function PassengerSelector({ innerRef, innerProps, closeMenu, updateData, passengers }: Props) {
+function PassengerSelector({ innerRef, innerProps, closeMenu, updateFormData, passengers }: Props) {
   console.log(passengers,'passengers in passgengerselector line 13');
   
   
   const addPassenger = (e: any, who: string) => {
     e.preventDefault()
     const newInfo = who == 'a' ? { adults: passengers.adults + 1 } : { children: passengers.children + 1 }
-    updateData({passengers:{...passengers, ...newInfo} })
+    updateFormData({passengers:{...passengers, ...newInfo} })
   }
 
   const reducePassenger = (e: any, who: string) => {
@@ -25,7 +25,7 @@ function PassengerSelector({ innerRef, innerProps, closeMenu, updateData, passen
     let newInfo = null
     if (who == 'a' && passengers.adults > 0) newInfo = { adults: passengers.adults - 1 }
     if (who == 'c' && passengers.children > 0) newInfo = { children: passengers.children - 1 }
-    updateData({ passengers: { ...passengers, ...newInfo } })
+    updateFormData({ passengers: { ...passengers, ...newInfo } })
   }
   
   return (
