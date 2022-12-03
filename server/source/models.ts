@@ -28,10 +28,9 @@ export interface Flight {
   depatureDestination: string
   flight_id: string
   itineraries: Itinerary[]
-
 }
 
 export interface FlightData {
-  depFlights: Flight[]
-  returnFlights?: Flight[]
+  depFlights: Flight[] | string
+  returnFlights?: Flight[] | string
 }

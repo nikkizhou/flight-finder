@@ -4,9 +4,8 @@ import data from './data.json'
 
 
 const filterFlights = (depDes: string, arrDes: string, date: string, passengers: Passenger) => {
-  const flights = []
-  //@ts-ignore
-  const nrPas = parseInt(passengers.adults) + parseInt(passengers.children)
+  let flights:any[]|string = []
+  const nrPas = passengers.adults + passengers.children
 
   const isRightFlight = (f: Flight) =>
     f.depatureDestination.toLowerCase() == (depDes as string).toLowerCase()
@@ -24,9 +23,11 @@ const filterFlights = (depDes: string, arrDes: string, date: string, passengers:
       itiner.depatureAt.includes(date as string)
       && itiner.avaliableSeats >= nrPas
     const newItiner = f.itineraries.filter(itiner => isRightItiner(itiner))
-
-    newF.itineraries = newItiner
-    flights.push(newF) 
+    console.log(newItiner.length == 0);
+    
+    newF.itineraries = newItiner;
+    (flights as any[]).push(newF) 
+    if (newItiner.length == 0) flights = 'no data found'
   })
 
   return flights
@@ -39,7 +40,6 @@ export const getFlights = async (req: Request, res: Response) => {
   //@ts-ignore
   const depFlights = filterFlights(depDes, arrDes, depDate, passengers)
   console.log(depFlights);
-  
   //@ts-ignore
   const returnFlights = roundTrip=='true' ? filterFlights(arrDes, depDes, returnDate, passengers) : []
   console.log(returnFlights);

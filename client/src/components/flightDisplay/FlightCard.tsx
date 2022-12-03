@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Flight, Itinerary } from '../../interfaces'
 import calculateDuration from '../../utils/calculateDuration'
-import FlightCardDetail from './FlightCardDetail'
 
 interface Props {
   id: number,
@@ -26,9 +25,8 @@ function FlightCard({ id, title, depDes, arrDes, flight_id, itiner, updateChosen
 
   const [showDetails,setShowDetails] = useState(false) 
   const handleClick = () => setShowDetails(prev => !prev)
-  console.log(showDetails,'line 29');
   
-  
+
   return (
     <div className="card" >
       <div className="clickAera" onClick={handleClick}>

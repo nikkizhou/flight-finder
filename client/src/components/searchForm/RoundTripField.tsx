@@ -14,7 +14,12 @@ function RoundTripField({updateFormData}:{updateFormData:Function}) {
   ];
 
   return (
-    <Select id="roundTrip" options={roundTripOptions} onChange={handleSelect} placeholder="One Way / Round Trip" />
+    <Select
+      id="roundTrip"
+      options={roundTripOptions}
+      onChange={handleSelect}
+      placeholder="One Way / Round Trip"
+      required/>
   )
 }
 

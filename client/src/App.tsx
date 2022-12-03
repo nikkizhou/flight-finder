@@ -1,24 +1,17 @@
 import React,{useState} from 'react';
-import './App.css';
-import SearchForm from './components/searchForm/SearchForm'
-import FlightDisplay from './components/flightDisplay/FlightDisplay'
-import { FlightData } from './interfaces'
+import { Routes, Route } from "react-router-dom";
+import Home from './components/Home';
+import Booking from './components/Booking';
 
 function App() {
-  const defaultFlightData = {
-    depFlights: [],
-    returnFlights:[]
-  }
-  const [flightData, setFlightData] = useState<FlightData>(defaultFlightData)
-  const updateFlightData = (newFlightData: FlightData) => setFlightData(newFlightData)
-  console.log(flightData,'flightData line 18');
-  
   return (
     <div className="App">
-      <SearchForm updateFlightData={updateFlightData} />
-      <FlightDisplay flightData={flightData} />
+      <Routes>
+        <Route path="/booking" element={<Booking/>} />
+        <Route path="/" element={<Home/>} />
+      </Routes>
     </div>
-  );
+  )
 }
 
 export default App;

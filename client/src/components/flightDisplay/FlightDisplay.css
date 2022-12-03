@@ -39,4 +39,10 @@ span{
 
 .bookBtn{
   width: 40vw;
+  height: 40px;
+  font-size: large;
+  background-color: aliceblue;
+  border:solid;
+  border-radius: 10px;
+  font-weight: 600;
 }

@@ -2,21 +2,23 @@ import React,{useState,useEffect} from 'react'
 import { Flight } from '../../interfaces'
 import FlightCard from './FlightCard'
 
-
 interface Props {
-  flights: Flight[] | undefined,
+  flights: Flight[] | undefined|string,
   title: string,
   chosenFlights: {forth:number,back:number}
   updateChosenFlights:Function
 }
 
 function FlightList({ flights, title, chosenFlights, updateChosenFlights }: Props) {
-
+  console.log(flights,'flights in line 14');
+  
   return (
     <div className="list">
       <h1>{ title }</h1>
-      {flights?.map(flight => 
-        flight.itineraries.map((itiner,index) =>
+      {flights == 'no data found'
+        ?<h4>No flights found for this date...</h4>
+        : (flights as Flight[])?.map(flight =>
+        flight.itineraries.map((itiner, index) =>
           <FlightCard
             id={index}
             title={title}
