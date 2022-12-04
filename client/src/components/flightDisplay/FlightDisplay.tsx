@@ -1,22 +1,23 @@
 import React,{useState} from 'react'
 import './FlightDisplay.css';
-import { FlightData } from '../../interfaces'
+import { FlightData, Itinerary } from '../../interfaces'
 import FlightList from './FlightList';
 import { useNavigate } from 'react-router-dom';
 
 function FlightDisplay({ flightData }: { flightData: FlightData }) {
   const navigate = useNavigate();
-  const { depFlights, returnFlights } = flightData
+  const { depFlights, returnFlights, passengers } = flightData
   const [chosenFlights, setChosenFlights] = useState<any>({ forth: null, back: null }) 
-  const updateChosenFlights = (id: number, title: string) => {
-    const newInfo = title == 'Departure' ? { forth: id } : { back: id }
+  const updateChosenFlights = (flight: Itinerary, title: string) => {
+    const newInfo = title == 'Departure' ? { forth: flight } : { back: flight }
     setChosenFlights({...chosenFlights,...newInfo},)
   }
+
   console.log(chosenFlights);
   
-  const gotDepFlights = flightData.depFlights?.length != 0 
-  const gotRetFlights = flightData.returnFlights?.length != 0 
-
+  const gotDepFlights = !flightData.depFlights?.length 
+  const gotRetFlights = !flightData.returnFlights?.length
+  
   return (
     <div className="flightDisplay">
       <div className="container">
@@ -33,7 +34,7 @@ function FlightDisplay({ flightData }: { flightData: FlightData }) {
       </div>
       {chosenFlights.forth&&<button
         className='bookBtn'
-        onClick={() => navigate('/booking', {state: flightData})}
+        onClick={() => navigate('/booking', { state:{...chosenFlights,passengers} })}
       >Book Now</button>}
     </div>
   )

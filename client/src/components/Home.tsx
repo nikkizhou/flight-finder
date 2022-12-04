@@ -7,7 +7,8 @@ import { FlightData } from '../interfaces'
 function Home() {
   const defaultFlightData = {
     depFlights: [],
-    returnFlights: []
+    returnFlights: [],
+    passengers:{adult:0,child:0}
   }
   const [flightData, setFlightData] = useState<FlightData>(defaultFlightData)
   const updateFlightData = (newFlightData: FlightData) => setFlightData(newFlightData)

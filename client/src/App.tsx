@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { Routes, Route } from "react-router-dom";
 import Home from './components/Home';
-import Booking from './components/Booking';
+import Booking from './components/booking/Booking';
 
 function App() {
   return (

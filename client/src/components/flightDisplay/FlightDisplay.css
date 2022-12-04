@@ -9,10 +9,10 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  
   }
 
 .list{
-  
   min-width: 35vw;
 }
 

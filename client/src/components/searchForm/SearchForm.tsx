@@ -32,13 +32,17 @@ function SearchForm({ updateFlightData }: { updateFlightData :Function}) {
   const [submitFlag, setSubmitFlag] = useState(false)
   const updateFormData = (newData: FormDataI) => setFormData({ ...formData, ...newData })
 
+  console.log(formData, 'formData in 35 in SearchForm');
+  console.log(submitFlag,'submitflag in SearchForm');
+  
+  
   //@ts-ignore
   useEffect(() => {
     const getFlightData = async  () => {
       const res = await axios.get('http://localhost:5000/api/flights', { params: formData });
-      updateFlightData(res.data);
+      updateFlightData({...res.data, passengers: formData.passengers});
     }
-    getFlightData()
+    if (submitFlag) getFlightData()
   }, [submitFlag]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +57,6 @@ function SearchForm({ updateFlightData }: { updateFlightData :Function}) {
     updateFormData(details)
     setSubmitFlag(!submitFlag)
   }
-
  
   return (
     <div className="container">

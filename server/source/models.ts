@@ -17,6 +17,7 @@ export interface FormDataI {
 
 // interfaces for flightData
 export interface Itinerary {
+
   arriveAt: string
   depatureAt: string
   avaliableSeats: number

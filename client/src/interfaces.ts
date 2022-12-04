@@ -17,6 +17,7 @@ export interface FormDataI {
 
 // interfaces for flightData
 export interface Itinerary{
+  id:string
   arriveAt: string
   depatureAt: string
   avaliableSeats: number
@@ -33,5 +34,27 @@ export interface Flight {
 
 export interface FlightData {
   depFlights: Flight[]
-  returnFlights?: Flight[]
+  returnFlights?: Flight[],
+  passengers:{adult:number,child:number}
+}
+
+//interfaces for ChosenFlight
+export interface ChosenFlight{
+  id: string
+  title:string
+  depDes: string
+  arrDes: string
+  flight_id: string
+  depatureAt: string
+  arriveAt: string
+  avaliableSeats: number
+  prices: { adult: number, child: number, currency: string }[]
+}
+
+export interface PassengerInfo{
+  firstName: string
+  lastName: string
+  phone: number
+  email: string
+  passNr: string
 }
