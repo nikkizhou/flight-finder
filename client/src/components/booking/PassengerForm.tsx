@@ -2,7 +2,13 @@ import React, { useState,useEffect } from 'react'
 import { PassengerInfo } from '../../interfaces'
 import PassengerInputs from './PassengerInputs';
 
-function PassengerForm({ passengerNr, updatePassInfo }: { passengerNr: number, updatePassInfo: Function }) {
+interface Props{
+  passengerNr: number,
+  updatePassInfo: Function,
+  toggleIsEditing: Function 
+}
+
+function PassengerForm({ passengerNr, updatePassInfo, toggleIsEditing }:Props) {
   const [formData, setFormData] = useState<PassengerInfo[]>([])
   console.log(formData,'formData line 6');
   
@@ -16,6 +22,7 @@ function PassengerForm({ passengerNr, updatePassInfo }: { passengerNr: number, u
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
     updatePassInfo(formData)
+    toggleIsEditing()
   }
 
   return (
@@ -23,7 +30,7 @@ function PassengerForm({ passengerNr, updatePassInfo }: { passengerNr: number, u
       <h1>Passengers' Info</h1>
         <form className="booking_form" onSubmit={handleSubmit}>
           {[...Array(passengerNr)].map((x, i) =>
-            <PassengerInputs key={i} id={i + 1} updateFormData={updateFormData} />
+            <PassengerInputs key={i} id={i + 1} updateFormData={updateFormData} formData={formData} />
           )}
           <button className="booking_submit" type="submit">Confirm</button>
         </form>

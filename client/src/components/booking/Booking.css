@@ -63,10 +63,7 @@ input {
 }
 
 
-
-
-
-.booking_submit {
+.booking_submit, .passInfoDisplay_btn{
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
   width: 120px;
   height: 40px;
@@ -84,4 +81,27 @@ input {
 
 .booking_submit:hover {
   background: #CC4949;
+}
+
+
+.passInfoDisplay{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 5%;
+  background-color: rgba(252, 250, 249, 0.607);
+}
+
+.passInfoDisplay_fields{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 15%;
+  font-size: larger;
+}
+
+.btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }

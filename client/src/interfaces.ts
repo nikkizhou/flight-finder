@@ -54,7 +54,7 @@ export interface ChosenFlight{
 export interface PassengerInfo{
   firstName: string
   lastName: string
-  phone: number
+  phone: number|undefined
   email: string
   passNr: string
 }
